@@ -3,6 +3,7 @@
 var express = require("express");
 var path = require("path");
 var fs = require("fs");
+const { v4: uuidv4 } = require('uuid');
 
 // Sets up the Express App
 // =============================================================
@@ -40,6 +41,7 @@ app.get("/api/notes", function (req, res) {
 app.post("/api/notes", function (req, res) {
   // Get the new note request
   newNote = req.body
+  newNote.id = uuidv4();
 
   // get the old notes and store in savedNotes
   var savedNotes = JSON.parse(fs.readFileSync("db/db.json", "utf8"));

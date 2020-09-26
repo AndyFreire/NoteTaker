@@ -109,15 +109,17 @@ const renderNoteList = (notes) => {
 
   // Returns jquery object for li with given text and delete button
   // unless withDeleteButton argument is provided as false
-  const create$li = (text, withDeleteButton = true) => {
+  const create$li = (note, withDeleteButton = true) => {
     const $li = $("<li class='list-group-item'>");
-    const $span = $("<span>").text(text);
+    const $span = $("<span>").text(note.title);
     $li.append($span);
+    $li.attr("data-id", note.id);
 
     if (withDeleteButton) {
       const $delBtn = $(
         "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
       );
+      $delBtn.attr("data-id", note.id);
       $li.append($delBtn);
     }
     return $li;
@@ -128,7 +130,8 @@ const renderNoteList = (notes) => {
   }
 
   notes.forEach((note) => {
-    const $li = create$li(note.title).data(note);
+    const $li = create$li(note);
+
     noteListItems.push($li);
   });
 
